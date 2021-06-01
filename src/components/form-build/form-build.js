@@ -16,7 +16,7 @@ export default class FormBuild extends React.Component {
                     display="flex"
 
                     mt={2}
-                    ml={3}
+                    ml={4}
                 >
                     <TextField
                         id="outlined-textarea"
@@ -38,7 +38,7 @@ export default class FormBuild extends React.Component {
                     display="flex"
 
                     mt={2}
-                    ml={5}
+                    ml={8}
                 >
                     <TextField
                         id="outlined-multiline-static"
@@ -78,7 +78,11 @@ export default class FormBuild extends React.Component {
         console.log(this.props)
         return (
 
-            <Box display="flex">
+            <Box
+                width="45%"
+                display="flex"
+                justifyContent="space-around"
+            >
                 <Box> {this.getValueInput()}</Box>
                 <Box>{this.getValueTextarea()}</Box>
                 <Box> {this.getValueCheckbox()}</Box>
