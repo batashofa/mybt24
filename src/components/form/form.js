@@ -9,26 +9,23 @@ export default class Form extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            formInput: 0,
-            formTextarea: 0,
-            formCheckbox: 0,
-            arrayFormValues: []
-
+            formValues: {},
         };
     }
 
-    getInputValue(e) {
-        this.setState({[e.target.id]: e.target.value})
-    }
-
-    sentToFormBuild() {
-        this.setState({arrayFormValues: [this.state.formInput, this.state.formTextarea, this.state.formCheckbox]})
+    formData(e) {
+        const formData = new FormData(e.target);
+        e.preventDefault();
+        let object = {};
+        for (let pair of formData.entries()) {
+            object = {...object, [pair[0]]: pair[1]}
+        }
+        this.setState({formValues: {...object}});
     }
 
     render() {
-        console.log(this.state)
         return (
-            <form>
+            <form onSubmit={(e) => this.formData(e)}>
                 <Box
                     fontWeight={500}
                     fontStyle="Roboto"
@@ -43,7 +40,7 @@ export default class Form extends React.Component {
                             pb={2}
                         >
                             {"Input"}</Box>
-                        <TextField onChange={(e) => this.getInputValue(e)}
+                        <TextField name="formInput"
                                    id="formInput" label="Введите число" type="number" variant="outlined"/>
                     </Box>
                     <Box>
@@ -52,7 +49,7 @@ export default class Form extends React.Component {
                             pb={2}
                         >
                             {"Textarea"}</Box>
-                        <TextField onChange={(e) => this.getInputValue(e)}
+                        <TextField name="formTextarea"
                                    id="formTextarea" label="Введите число" type="number" variant="outlined"/>
                     </Box>
                     <Box>
@@ -61,18 +58,18 @@ export default class Form extends React.Component {
                             pb={2}
                         >
                             {"Checkbox"}</Box>
-                        <TextField onChange={(e) => this.getInputValue(e)}
+                        <TextField name="formCheckbox"
                                    id="formCheckbox" label="Введите число" type="number" variant="outlined"/>
                     </Box>
                     <Box
                         mt={7}
                     >
-                        <Button onClick={() => this.sentToFormBuild()} variant="outlined">Build</Button>
+                        <Button type="submit" variant="outlined">Build</Button>
                     </Box>
                 </Box>
 
                 <FormBuild
-                    arrayFormValues={this.state.arrayFormValues}
+                    formValues={this.state.formValues}
                 />
             </form>
         );
